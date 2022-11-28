@@ -1,0 +1,87 @@
+package com.liferayforms;
+
+import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
+import org.junit.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.apache.commons.io.FileUtils;
+import java.io.File;
+
+public class TestCase1 {
+  private WebDriver driver;
+  private String baseUrl;
+  private boolean acceptNextAlert = true;
+  private StringBuffer verificationErrors = new StringBuffer();
+  JavascriptExecutor js;
+  @Before
+  public void setUp() throws Exception {
+    System.setProperty("webdriver.chrome.driver", "");
+    driver = new ChromeDriver();
+    baseUrl = "https://www.google.com/";
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+    js = (JavascriptExecutor) driver;
+  }
+
+  @Test
+  public void testUntitledTestCase() throws Exception {
+    driver.get("https://forms.liferay.com/web/forms/shared/-/form/122548");
+    driver.findElement(By.name("_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_ddm$$WhatIsYourName$rLGLX51T$0$$en_US")).click();
+    driver.findElement(By.name("_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_ddm$$WhatIsYourName$rLGLX51T$0$$en_US")).clear();
+    driver.findElement(By.name("_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_ddm$$WhatIsYourName$rLGLX51T$0$$en_US")).sendKeys("Neymar Jr.");
+    driver.findElement(By.xpath("//div[@id='ddmFormaJiBR6dJ']/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div/div/div/div/input[2]")).click();
+    driver.findElement(By.xpath("//div[@id='ddmFormaJiBR6dJ']/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div/div/div/div/input[2]")).clear();
+    driver.findElement(By.xpath("//div[@id='ddmFormaJiBR6dJ']/div[2]/div/div/div/div/div/div/div/div[2]/div/div/div/div/div/div/input[2]")).sendKeys("09/04/2004");
+    driver.findElement(By.name("_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_ddm$$WhyDidYouJoinTheTestingArea$hnnpZ3VU$0$$en_US")).click();
+    driver.findElement(By.name("_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_ddm$$WhyDidYouJoinTheTestingArea$hnnpZ3VU$0$$en_US")).clear();
+    driver.findElement(By.name("_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_ddm$$WhyDidYouJoinTheTestingArea$hnnpZ3VU$0$$en_US")).sendKeys("Eu amo testar softwares");
+    driver.findElement(By.id("ddm-form-submit")).click();
+    driver.findElement(By.xpath("//button[@type='button']")).click();
+    driver.findElement(By.xpath("//div[@id='ddmFormpvw1iJ9o']/div[2]/div/div/div/div/div/p")).isDisplayed()
+  }
+
+  @After
+  public void tearDown() throws Exception {
+    driver.quit();
+    String verificationErrorString = verificationErrors.toString();
+    if (!"".equals(verificationErrorString)) {
+      fail(verificationErrorString);
+    }
+  }
+
+  private boolean isElementPresent(By by) {
+    try {
+      driver.findElement(by);
+      return true;
+    } catch (NoSuchElementException e) {
+      return false;
+    }
+  }
+
+  private boolean isAlertPresent() {
+    try {
+      driver.switchTo().alert();
+      return true;
+    } catch (NoAlertPresentException e) {
+      return false;
+    }
+  }
+
+  private String closeAlertAndGetItsText() {
+    try {
+      Alert alert = driver.switchTo().alert();
+      String alertText = alert.getText();
+      if (acceptNextAlert) {
+        alert.accept();
+      } else {
+        alert.dismiss();
+      }
+      return alertText;
+    } finally {
+      acceptNextAlert = true;
+    }
+  }
+}
